@@ -10,6 +10,7 @@ import EquipsList from '../views/equips/list.vue';
 import WeaponsList from '../views/weapons/list.vue';
 //导入添加英雄的组件
 import HeroesAdd from '../views/heroes/Add.vue';
+import HeroesEdit from '../views/heroes/Edit.vue';
 
 
 //注册VueRouter插件  以后可以用this.$router this.$route
@@ -32,6 +33,7 @@ var router = new VueRouter({
         //组件不能加引号 是一个模块
         {name:'heroes',path:'/heroes',component:HeroesList},
         {name:'heroadd',path:'/heroes/add',component:HeroesAdd},
+        {name:'heroEdit',path:'/heroes/:id',component:HeroesEdit,props:true},
         {name:'equips',path:'/equips',component:EquipsList},
         {name:'weapons',path:'/weapons',component:WeaponsList}
        

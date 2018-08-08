@@ -20,9 +20,11 @@
                   <td>{{item.name}}</td>
                   <td>{{item.gender}}</td>
                   <td>
-                    <a href="edit.html">edit</a>
+                    <!-- <a href="edit.html">edit</a> -->
+                    <router-link :to="'/heroes/'+item.id">edit</router-link>
                     &nbsp;&nbsp;
-                    <a href="javascript:window.confirm('Are you sure?')">delete</a>
+                    <a @click.prevent="(handleDelete(item.id))" href="javascript:void(0)">delete</a>
+                    <!-- <router-link :to="'/heroes/'+item.id">删除</router-link> -->
                   </td>
                 </tr>
                 
@@ -46,7 +48,12 @@
       },
       //vm刚创建好 就发送axios 因为是异步请求 时间慢 页面加载好 请求正好有响应
       created(){
-        axios
+        this.loadData();
+      },
+      methods:{
+        //加载列表数据
+        loadData(){
+           axios
             .get('http://localhost:3001/heroes')
             .then((response)=>{
                 // console.log(response)
@@ -58,6 +65,25 @@
             .catch((err)=>{
               console.log(err);
             })
+        },
+        handleDelete(id){
+          if(!confirm('是否要删除数据？')){
+            return;
+          }
+          axios
+              .delete(`http://localhost:3001/heroes/${id}`)
+              .then((response)=>{
+                if(response.status===200){
+                  //  this.list = response.data;
+                  this.loadData();
+                }else{
+                  alert('删除失败');
+                }
+              })
+              .catch((err)=>{
+                console.log(err);
+              })
+        }
       }
 
 
